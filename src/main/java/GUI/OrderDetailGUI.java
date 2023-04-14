@@ -157,6 +157,11 @@ public class OrderDetailGUI extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tblVegetable);
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         cmbSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -431,6 +436,26 @@ public class OrderDetailGUI extends javax.swing.JFrame {
         dispose();
         
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        
+        int selectedRow = tblOrderDetail.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "There is no row selected");
+            return;
+        }
+        int orderID = Integer.parseInt(tblOrderDetail.getValueAt(selectedRow, 0).toString());
+        int vegetableID= Integer.parseInt(tblOrderDetail.getValueAt(selectedRow, 1).toString());
+                
+        if (orderDetailBLL.deleteOrderDetailByIDAndVegetableID(orderID,vegetableID) == 0) {
+            JOptionPane.showMessageDialog(this, "Delete OrderDetail Success!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Delete OrderDetail Failed!");
+        }
+
+        orderDetailRefresh();
+        
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
